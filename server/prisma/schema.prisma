@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ITINERARY {
+  itinerary_id     Int    @id
+  itinerary_title  String
+  itinerary_date   Int
+  itinerary_detail String
+  user_id          Int
+  festival_id      Int?
+  event_id         Int?
+  touristSpot_id   Int?
+}
+
+model REVIEW {
+  review_id       Int      @id
+  review_title    String
+  review_date     Int
+  user_id         Int
+  review_contents String
+  review_subject  String
+  reviewPhoto_id  String[]
+  review_grade    String
+}
+
+model REVIEW_PHOTO {
+  reviewPhoto_id  Int    @id
+  reviewPhoto_url String
+}
+
+model event {
+  event_id           Int      @id(map: "EVENT_pkey")
+  event_name         String
+  event_location     String?
+  event_rnAddress    String?
+  event_lnAddress    String?
+  event_stDate       String?
+  event_fnDate       String?
+  event_stTime       String?
+  event_fnTime       String?
+  event_charge       String?
+  event_org          String?
+  event_discountInfo String?
+  event_enterAge     String?
+  event_url          String?
+  event_parking      Boolean?
+  event_detail       String?
+}
+
+model festival {
+  fstvlId           Int     @id(map: "FESTIVAL_pkey") @default(autoincrement())
+  title             String?
+  tel               String?
+  first_image       String?
+  first_image2      String?
+  event_start_date  String?
+  event_end_date    String?
+  content_id        String?
+  content_type_id   String?
+  addr1             String?
+  addr2             String?
+  age_limit         String?
+  booking_place     String?
+  discount_info     String?
+  event_homepage    String?
+  festival_grade    String?
+  sponsor1          String?
+  sponsor1_tel      String?
+  sponsor2          String?
+  sponsor2_tel      String?
+  subevent          String?
+  use_time_festival String?
+}
+
+model region {
+  id                 Int     @id @default(autoincrement())
+  level1             String
+  level2             String?
+  level3             String?
+  x_coord            String?
+  y_coord            String?
+  mid_term_code      String?
+  short_term_code    String?
+  short_term_weather String?
+  mid_term_weather   String?
+}
+
+model tourist_spot {
+  trrsrtId      Int     @id @default(autoincrement())
+  trrsrtNm      String
+  trrsrtSe      String
+  rdnmadr       String?
+  lnmadr        String?
+  cnvnncFclty   String?
+  appnDate      String?
+  aceptncCo     String?
+  prkplceCo     String?
+  trrsrtIntrcn  String?
+  phoneNumber   String?
+  institutionNm String?
+}
+
+model users {
+  id       Int    @id(map: "USER_pkey") @default(autoincrement())
+  email    String
+  password String
+  name     String
+  phoneNum Int
+  sex      String
+}
