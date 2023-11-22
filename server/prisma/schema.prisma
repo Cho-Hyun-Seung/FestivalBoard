@@ -4,7 +4,6 @@ generator client {
 
 generator nexusPrisma {
   provider = "nexus-prisma"
-    output   = "../src/generated/nexus-prisma"
 }
 
 datasource db {
@@ -32,7 +31,7 @@ model Planner {
   author  User @relation(fields: [authorId], references: [id])
   authorId   Int
   festivals Festival[] 
-  touristSpots Touristspot[] 
+  touristSpots TouristSpot[] 
   weather String[]
 }
 
@@ -77,7 +76,7 @@ model Region {
   midTermWeather   String?
 }
 
-model Touristspot {
+model TouristSpot {
   id      Int     @id @default(autoincrement())
   title      String
   infoCenter String?
@@ -99,7 +98,8 @@ model Touristspot {
 model Review {
   id       Int       @id @default(autoincrement())
   title    String
-  date     Int
+  content String?
+  date     DateTime  @default(now())
   grade    Int
   author  User  @relation(fields: [authorId],references: [id])
     authorId  Int
