@@ -2,6 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nexusPrisma {
+  provider = "nexus-prisma"
+    output   = "../src/generated/nexus-prisma"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -15,8 +20,8 @@ model User {
   name     String
   phoneNum Int
   sex      String
-  writtenPlanner  Planner[]
-  writtenReview Review[]
+  planners  Planner[]
+  reviews Review[]
 }
 
 model Planner {
@@ -27,41 +32,22 @@ model Planner {
   author  User @relation(fields: [authorId], references: [id])
   authorId   Int
   festivals Festival[] 
-  events Event[] 
   touristSpots Touristspot[] 
   weather String[]
 }
 
-model Event {
-  id           Int       @id @default(autoincrement())
-  name         String
-  location     String?
-  rnAddress    String?
-  lnAddress    String?
-  stDate       String?
-  fnDate       String?
-  stTime       String?
-  fnTime       String?
-  charge       String?
-  org          String?
-  discountInfo String?
-  enterAge     String?
-  url          String?
-  parking      Boolean?
-  detail       String?
-  Planners  Planner[]
-}
 
+// 행사 축제 공연 통합
 model Festival {
   id           Int     @id @default(autoincrement())
   title             String
   tel               String?
-  first_image       String?
-  first_image2      String?
-  startDate  String?
-  endDate    String?
-  contentId        String?
-  contentTypeId   String?
+  firstImage       String?
+  firstImage2      String?
+  startDate  Int?
+  endDate    Int?
+  contentId        String
+  contentTypeId   String
   addr1             String?
   addr2             String?
   ageLimit         String?
@@ -75,7 +61,7 @@ model Festival {
   sponsor2Tel      String?
   subevent          String?
   useTimeFestival String? // 이용요금
-  Planners  Planner[]
+  planners  Planner[]
 }
 
 model Region {
@@ -93,18 +79,21 @@ model Region {
 
 model Touristspot {
   id      Int     @id @default(autoincrement())
-  name      String
-  category      String  // 광광지 구분
-  rdnmadr       String? // 도로명 주소
-  lnmadr        String? // 지번 주소
-  cnvnncFclty   String? // 편의시설 정보
-  appnDate      String? // 지정일자
-  aceptncCo     String? // 수용가능 인원 수
-  parkingPlace     String? // 주차 
-  introduce  String? // 설명
-  phoneNumber   String?
-  institutionNm String? // 관리기관명
-  Planners  Planner[]
+  title      String
+  infoCenter String?
+  addr1 String
+  contentId String
+  contentType String @default("12")
+  firstImage       String?
+  firstImage2      String?
+  restDate String?
+  useSeason String?
+  useTime String?
+  zipcode Int?
+  homepage String?
+  overview String?
+  parking String
+  planners  Planner[]
 }
 
 model Review {
