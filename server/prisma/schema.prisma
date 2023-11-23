@@ -17,7 +17,7 @@ model User {
   email    String @unique
   password String
   name     String
-  phoneNum Int
+  phoneNum String
   sex      String
   planners  Planner[]
   reviews Review[]
@@ -26,13 +26,13 @@ model User {
 model Planner {
   id     Int    @id @default(autoincrement())
   title  String
-  date   Int
-  detail String
+  date   DateTime @default(now())
+  content String
   author  User @relation(fields: [authorId], references: [id])
   authorId   Int
   festivals Festival[] 
   touristSpots TouristSpot[] 
-  weather String[]
+  weathers Weather[]
 }
 
 
@@ -63,7 +63,7 @@ model Festival {
   planners  Planner[]
 }
 
-model Region {
+model Weather {
   id                 Int     @id @default(autoincrement())
   level1             String
   level2             String?
@@ -74,6 +74,9 @@ model Region {
   shortTermCode    String?
   shortTermWeather String?
   midTermWeather   String?
+  usePlannerId Int
+  usePlanner Planner @relation(fields: [usePlannerId], references: [id])
+
 }
 
 model TouristSpot {
@@ -102,7 +105,7 @@ model Review {
   date     DateTime  @default(now())
   grade    Int
   author  User  @relation(fields: [authorId],references: [id])
-    authorId  Int
+  authorId  Int
   reviewPhotos Reviewphoto[]
 }
 

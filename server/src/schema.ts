@@ -11,16 +11,24 @@ import {
 import { DateTimeResolver } from 'graphql-scalars'
 import { Context } from './context'
 import objectTypes from './objectType'
-
+import {
+  Mutation,
+  UserCreateInput,
+  PlannerCreateInput,
+  reviewCreateInput,
+} from './mutation'
 const Query = {}
-
-const Mutation = {}
-
 export const schema = makeSchema({
-  types: [Query, Mutation, ...objectTypes],
+  types: [
+    ...Mutation,
+    UserCreateInput,
+    PlannerCreateInput,
+    reviewCreateInput,
+    ...objectTypes,
+  ],
   outputs: {
-    schema: __dirname + '/../schema.graphql',
     typegen: __dirname + '/generated/nexus.ts',
+    schema: __dirname + '/../schema.graphql',
   },
   contextType: {
     module: require.resolve('./context'),

@@ -4,8 +4,9 @@ import {
   Review,
   Reviewphoto,
   Festival,
-  Region,
+  Weather,
   TouristSpot,
+  Planner,
 } from 'nexus-prisma'
 const objectTypes = [
   objectType({
@@ -50,18 +51,30 @@ const objectTypes = [
     },
   }),
   objectType({
-    name: Region.$name,
+    name: Weather.$name,
     definition(t) {
-      t.field(Region.id)
-      t.field(Region.level1)
-      t.field(Region.level2)
-      t.field(Region.level3)
-      t.field(Region.xCoord)
-      t.field(Region.yCoord)
-      t.field(Region.midTermCode)
-      t.field(Region.shortTermCode)
-      t.field(Region.shortTermWeather)
-      t.field(Region.midTermWeather)
+      t.field(Weather.id)
+      t.field(Weather.level1)
+      t.field(Weather.level2)
+      t.field(Weather.level3)
+      t.field(Weather.xCoord)
+      t.field(Weather.yCoord)
+      t.field(Weather.midTermCode)
+      t.field(Weather.shortTermCode)
+      t.field(Weather.shortTermWeather)
+      t.field(Weather.midTermWeather)
+    },
+  }),
+  objectType({
+    name: Planner.$name,
+    definition(t) {
+      t.field(Planner.id)
+      t.field(Planner.title)
+      // t.field(Planner.date)
+      t.field(Planner.content)
+      t.field(Planner.festivals)
+      t.field(Planner.touristSpots)
+      t.field(Planner.weathers)
     },
   }),
   objectType({
@@ -91,7 +104,7 @@ const objectTypes = [
       t.field(Review.id)
       t.field(Review.title)
       t.field(Review.content)
-      t.field(Review.date)
+      // t.field(Review.date)
       t.field(Review.grade)
       t.field(Review.reviewPhotos)
     },
