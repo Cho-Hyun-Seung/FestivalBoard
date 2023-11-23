@@ -28,7 +28,7 @@ export const schema = makeSchema({
   ],
   outputs: {
     typegen: __dirname + '/generated/nexus.ts',
-    schema: __dirname + '/../schema.graphql',
+    schema: __dirname + './../../schema.graphql',
   },
   contextType: {
     module: require.resolve('./context'),
