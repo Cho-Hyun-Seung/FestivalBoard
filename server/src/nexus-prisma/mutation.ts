@@ -7,8 +7,9 @@ import {
   queryType,
   stringArg,
 } from 'nexus'
-import { Planner, Review, User } from 'nexus-prisma'
+import { Festival, Planner, Review, User } from 'nexus-prisma'
 import { Context } from './context'
+import { error } from 'console'
 
 const UserCreateInput = inputObjectType({
   name: 'UserCreateInput',
@@ -19,7 +20,7 @@ const UserCreateInput = inputObjectType({
     t.field(User.phoneNum)
     t.field(User.sex)
     t.list.nonNull.field('planners', { type: PlannerCreateInput })
-    t.list.nonNull.field('reviews', { type: reviewCreateInput })
+    t.list.nonNull.field('reviews', { type: ReviewCreateInput })
   },
 })
 
@@ -31,12 +32,46 @@ const PlannerCreateInput = inputObjectType({
   },
 })
 
-const reviewCreateInput = inputObjectType({
-  name: 'reviewCreateInput',
+const ReviewCreateInput = inputObjectType({
+  name: 'ReviewCreateInput',
   definition(t) {
     t.field(Review.title)
     t.field(Review.content)
     t.field(Review.grade)
+  },
+})
+
+const FestivalCreateInput = inputObjectType({
+  name: 'FestivalCreateInput',
+  definition(t) {
+    t.field(Festival.title)
+    t.field(Festival.contentId)
+    t.field(Festival.contentTypeId)
+    // t.list.nonNull.field('planners', { type: PlannerCreateInput })
+  },
+})
+
+const FestivalCreateOptionInput = inputObjectType({
+  name: 'FestivalCreateOptionInput',
+  definition(t) {
+    t.field(Festival.tel)
+    t.field(Festival.firstImage)
+    t.field(Festival.firstImage2)
+    t.field(Festival.startDate)
+    t.field(Festival.endDate)
+    t.field(Festival.addr1)
+    t.field(Festival.addr2)
+    t.field(Festival.ageLimit)
+    t.field(Festival.bookingPlace)
+    t.field(Festival.discountInfo)
+    t.field(Festival.homepage)
+    t.field(Festival.grade)
+    t.field(Festival.sponsor1)
+    t.field(Festival.sponsor1Tel)
+    t.field(Festival.sponsor2)
+    t.field(Festival.sponsor2Tel)
+    t.field(Festival.subevent)
+    t.field(Festival.useTimeFestival)
   },
 })
 
@@ -87,6 +122,57 @@ const Mutation = [
           })
         },
       }),
+        t.nonNull.field('createFestival', {
+          type: Festival.$name,
+          args: {
+            data: nonNull(
+              arg({
+                type: 'FestivalCreateInput',
+              })
+            ),
+            option: arg({
+              type: 'FestivalCreateOptionInput',
+            }),
+          },
+
+          resolve: async (_, args, context: Context) => {
+            if (
+              await context.prisma.festival.findUnique({
+                where: {
+                  contentId: args.data.contentId,
+                },
+              })
+            ) {
+              throw new Error('중복된 축제입니다.' + args.data.contentId)
+            }
+
+            return context.prisma.festival.create({
+              data: {
+                title: args.data.title,
+                contentId: args.data.contentId,
+                contentTypeId: args.data.contentTypeId,
+                tel: args.option.tel,
+                firstImage: args.option.firstImage,
+                firstImage2: args.option.firstImage2,
+                startDate: args.option.startDate,
+                endDate: args.option.endDate,
+                addr1: args.option.addr1,
+                addr2: args.option.addr2,
+                ageLimit: args.option.ageLimit,
+                bookingPlace: args.option.bookingPlace,
+                discountInfo: args.option.discountInfo,
+                homepage: args.option.homepage,
+                grade: args.option.grade,
+                sponsor1: args.option.sponsor1,
+                sponsor2: args.option.sponsor2,
+                sponsor1Tel: args.option.sponsor1Tel,
+                sponsor2Tel: args.option.sponsor2Tel,
+                subevent: args.option.subevent,
+                useTimeFestival: args.option.useTimeFestival,
+              },
+            })
+          },
+        }),
         t.nonNull.field('createPlanner', {
           type: Planner.$name,
           args: {
@@ -116,4 +202,11 @@ const Mutation = [
   }),
 ]
 
-export { Mutation, UserCreateInput, PlannerCreateInput, reviewCreateInput }
+export {
+  Mutation,
+  UserCreateInput,
+  PlannerCreateInput,
+  ReviewCreateInput,
+  FestivalCreateInput,
+  FestivalCreateOptionInput,
+}

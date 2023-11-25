@@ -42,7 +42,22 @@ const getFestival = async () => {
   console.log(a)
   const res = await axios.get(a)
   const resData = await res.data.response.body.items.item
+  let festivalDataArr = []
+  resData.map((v) => {
+    const festivalData = {
+      title: v.title,
+      tel: v.tel,
+      firstImage: v.firstimage,
+      firstImage2: v.firstimage2,
+      contentId: v.contentid,
+      contentTypeId: v.contenttypeid,
+      startDate: v.eventstartdate,
+      endDate: v.eventenddate,
+    }
+    festivalDataArr.push(festivalData)
+  })
   console.log(resData)
+  return festivalDataArr
 }
 
 export default getFestival

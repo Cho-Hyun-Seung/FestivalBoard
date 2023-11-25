@@ -15,15 +15,19 @@ import {
   Mutation,
   UserCreateInput,
   PlannerCreateInput,
-  reviewCreateInput,
+  ReviewCreateInput,
+  FestivalCreateOptionInput,
+  FestivalCreateInput,
 } from './mutation'
 const Query = {}
 export const schema = makeSchema({
   types: [
     ...Mutation,
+    FestivalCreateInput,
+    FestivalCreateOptionInput,
     UserCreateInput,
     PlannerCreateInput,
-    reviewCreateInput,
+    ReviewCreateInput,
     ...objectTypes,
   ],
   outputs: {

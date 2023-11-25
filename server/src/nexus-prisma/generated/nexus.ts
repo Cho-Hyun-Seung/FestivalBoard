@@ -14,8 +14,38 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  FestivalCreateInput: { // input type
+    contentId: string; // String!
+    contentTypeId: string; // String!
+    title: string; // String!
+  }
+  FestivalCreateOptionInput: { // input type
+    addr1?: string | null; // String
+    addr2?: string | null; // String
+    ageLimit?: string | null; // String
+    bookingPlace?: string | null; // String
+    discountInfo?: string | null; // String
+    endDate?: number | null; // Int
+    firstImage?: string | null; // String
+    firstImage2?: string | null; // String
+    grade?: string | null; // String
+    homepage?: string | null; // String
+    sponsor1?: string | null; // String
+    sponsor1Tel?: string | null; // String
+    sponsor2?: string | null; // String
+    sponsor2Tel?: string | null; // String
+    startDate?: number | null; // Int
+    subevent?: string | null; // String
+    tel?: string | null; // String
+    useTimeFestival?: string | null; // String
+  }
   PlannerCreateInput: { // input type
     content: string; // String!
+    title: string; // String!
+  }
+  ReviewCreateInput: { // input type
+    content?: string | null; // String
+    grade: number; // Int!
     title: string; // String!
   }
   UserCreateInput: { // input type
@@ -24,13 +54,8 @@ export interface NexusGenInputs {
     password: string; // String!
     phoneNum: string; // String!
     planners?: NexusGenInputs['PlannerCreateInput'][] | null; // [PlannerCreateInput!]
-    reviews?: NexusGenInputs['reviewCreateInput'][] | null; // [reviewCreateInput!]
+    reviews?: NexusGenInputs['ReviewCreateInput'][] | null; // [ReviewCreateInput!]
     sex: string; // String!
-  }
-  reviewCreateInput: { // input type
-    content?: string | null; // String
-    grade: number; // Int!
-    title: string; // String!
   }
 }
 
@@ -163,6 +188,7 @@ export interface NexusGenFieldTypes {
     useTimeFestival: string | null; // String
   }
   Mutation: { // field return type
+    createFestival: NexusGenRootTypes['Festival']; // Festival!
     createPlanner: NexusGenRootTypes['Planner']; // Planner!
     signupUser: NexusGenRootTypes['User']; // User!
   }
@@ -257,6 +283,7 @@ export interface NexusGenFieldTypeNames {
     useTimeFestival: 'String'
   }
   Mutation: { // field return type name
+    createFestival: 'Festival'
     createPlanner: 'Planner'
     signupUser: 'User'
   }
@@ -326,6 +353,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createFestival: { // args
+      data: NexusGenInputs['FestivalCreateInput']; // FestivalCreateInput!
+      option?: NexusGenInputs['FestivalCreateOptionInput'] | null; // FestivalCreateOptionInput
+    }
     createPlanner: { // args
       authorEmail: string; // String!
       data: NexusGenInputs['PlannerCreateInput']; // PlannerCreateInput!

@@ -45,7 +45,7 @@ model Festival {
   firstImage2      String?
   startDate  Int?
   endDate    Int?
-  contentId        String
+  contentId        String @unique
   contentTypeId   String
   addr1             String?
   addr2             String?

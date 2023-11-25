@@ -28,7 +28,35 @@ type Festival {
   useTimeFestival: String
 }
 
+input FestivalCreateInput {
+  contentId: String!
+  contentTypeId: String!
+  title: String!
+}
+
+input FestivalCreateOptionInput {
+  addr1: String
+  addr2: String
+  ageLimit: String
+  bookingPlace: String
+  discountInfo: String
+  endDate: Int
+  firstImage: String
+  firstImage2: String
+  grade: String
+  homepage: String
+  sponsor1: String
+  sponsor1Tel: String
+  sponsor2: String
+  sponsor2Tel: String
+  startDate: Int
+  subevent: String
+  tel: String
+  useTimeFestival: String
+}
+
 type Mutation {
+  createFestival(data: FestivalCreateInput!, option: FestivalCreateOptionInput): Festival!
   createPlanner(authorEmail: String!, data: PlannerCreateInput!): Planner!
   signupUser(data: UserCreateInput!): User!
 }
@@ -56,6 +84,12 @@ type Review {
   grade: Int!
   id: Int!
   reviewPhotos: [Reviewphoto!]!
+  title: String!
+}
+
+input ReviewCreateInput {
+  content: String
+  grade: Int!
   title: String!
 }
 
@@ -100,7 +134,7 @@ input UserCreateInput {
   password: String!
   phoneNum: String!
   planners: [PlannerCreateInput!]
-  reviews: [reviewCreateInput!]
+  reviews: [ReviewCreateInput!]
   sex: String!
 }
 
@@ -115,10 +149,4 @@ type Weather {
   shortTermWeather: String
   xCoord: String
   yCoord: String
-}
-
-input reviewCreateInput {
-  content: String
-  grade: Int!
-  title: String!
 }
